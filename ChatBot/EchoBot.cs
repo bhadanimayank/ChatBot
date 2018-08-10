@@ -3,6 +3,7 @@ using Microsoft.Bot;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Core.Extensions;
 using Microsoft.Bot.Schema;
+using System.Linq;
 
 namespace ChatBot
 {
@@ -29,6 +30,10 @@ namespace ChatBot
 
                 // Echo back to the user whatever they typed.
                 await context.SendActivity($"Turn {state.TurnCount}: You sent '{context.Activity.Text}'");
+            }
+            else if (context.Activity.Type == ActivityTypes.ConversationUpdate && context.Activity.MembersAdded.FirstOrDefault()?.Id == context.Activity.Recipient.Id)
+            {
+                await context.SendActivity("Hi! I'm a restaurant assistant bot. I can add help you with your reservation.");
             }
         }
     }    
